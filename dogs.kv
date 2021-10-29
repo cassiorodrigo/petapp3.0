@@ -1,0 +1,82 @@
+Gerenciador:
+
+    Login:
+        name:'login'
+    NewUser:
+        name:'newuser'
+    PresencasHotel:
+        name: 'hotel'
+    Menu:
+        name: 'menu'
+    Chegadas:
+        name: 'chegadas'
+    PresencasCreche:
+        name: 'creche'
+    PresencasDayCare:
+        name: 'daycare'
+
+
+<Login>:
+    StackLayout:
+        size_hint:0.75,0.75
+        orientation:'lr-tb'
+        pos_hint:{"right":0.875}
+        spacing:'45dp'
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, None
+            MDTextField:
+                id: loginuser
+                write_tab: False
+                multiline: False
+                hint_text: 'Nome de Usuario'
+            MDTextField:
+                id:userpass
+                write_tab: False
+                multiline: False
+                password: True
+                hint_text: 'Senha'
+        BoxLayout:
+            size_hint: 1, None
+            # spacing: '35dp'
+            MDFillRoundFlatButton:
+                text:'Ok'
+                size_hint: None, None
+                on_release: root.manager.current = 'menu'
+            MDRoundFlatButton:
+                size_hint:None, None
+                pos_hint:{'right': 0.8}
+                text: 'Cancelar'
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, None
+
+            MDFillRoundFlatButton:
+                # size_hint: 1, None
+                text:"Sair"
+                on_release: app.stop()
+
+            MDTextButton:
+                # size_hint: None, None
+                # pos_hint:{'center':1}
+                text:'Registrar'
+                color:0,0,1,0.88
+<Menu>:
+    GridLayout:
+        rows: 3
+        height: bottomnav.height
+        MDLabel:
+            size_hint: 1, None
+            text: 'Menu'
+            halign: 'center'
+        GridLayout:
+            rows: 3
+            id:gridmenu
+
+        MDBottomNavigation:
+            size_hint: 1, None
+            id: bottomnav
+            MDBottomNavigationItem:
+                name:'menu'
+                text:'Menu'
+
