@@ -15,6 +15,10 @@ Gerenciador:
     PresencasDayCare:
         name: 'daycare'
 
+<TwoItemWithCheck>:
+
+    RightCheckbox:
+        name:'rightcheckbox'
 
 <Login>:
     StackLayout:
@@ -61,10 +65,42 @@ Gerenciador:
                 # pos_hint:{'center':1}
                 text:'Registrar'
                 color:0,0,1,0.88
+
+
+<PresencasHotel>:
+    ScrollView:
+        size_hint:0.97, 0.87
+        pos_hint:{"top":1}
+        MDList:
+            id: scrolllist
+    BoxLayout:
+        size_hint: None, None
+        spacing:'50dp'
+        pos_hint:{"x":(self.width/3)/self.width}
+        MDFloatingActionButton:
+            icon:'send'
+            on_release: root.caes_no_hotel()
+        MDFloatingActionButton:
+            icon:'home'
+            on_release: root.manager.current = "menu"
+
+        MDFloatingActionButton:
+            icon:'plus'
+            on_release: app.show_add_dog_dialog(root)
+
+
+<PresencasCreche>:
+    BoxLayout:
+        MDLabel:
+            text: 'Oi'
+<PresencasDayCare>:
+    BoxLayout:
+        MDLabel:
+            text: 'Oi'
+
 <Menu>:
     GridLayout:
         rows: 3
-        height: bottomnav.height
         MDLabel:
             size_hint: 1, None
             text: 'Menu'
@@ -73,10 +109,9 @@ Gerenciador:
             rows: 3
             id:gridmenu
 
-        MDBottomNavigation:
-            size_hint: 1, None
-            id: bottomnav
-            MDBottomNavigationItem:
-                name:'menu'
-                text:'Menu'
-
+<AddCaoPop>:
+    BoxLayout:
+        spacing: "50dp"
+        MDTextField:
+            id:addcaopop
+            hint_text:'Nome do Cão'
