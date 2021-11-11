@@ -16,9 +16,84 @@ Gerenciador:
         name: 'daycare'
 
 <TwoItemWithCheck>:
-
     RightCheckbox:
         name:'rightcheckbox'
+
+<NewUser>:
+    MDBoxLayout:
+        orientation: "vertical"
+        MDBoxLayout:
+            MDLabel:
+                pos_hint:{"center_y":0.9}
+                size_hint_y: None
+                id:lblcadastrar
+                halign: "center"
+                text:"Cadastrar novo usuário"
+
+        MDBoxLayout:
+            pos_hint:{"center_y":0.8, "center_x": 0.5}
+            size_hint:0.8, None
+            orientation: "vertical"
+            spacing: "20dp"
+            MDTextField:
+                id: nome
+                pos_hint:{"center_x": 0.5}
+                size_hint: 0.8, None
+                hint_text: "Nome"
+                write_tab: False
+                multiline: False
+            MDTextField:
+                id: username_cadastro
+                pos_hint:{"center_x": 0.5}
+                size_hint: 0.8, None
+                hint_text: "Nome de Usuário"
+                write_tab: False
+                multiline: False
+                helper_text: "Mínimo de 7 Caracteres para nome e sobrenome"
+                helper_text_mode: "on_error"
+            MDTextField:
+                id: email
+                pos_hint:{"center_x": 0.5}
+                size_hint: 0.8, None
+                hint_text: "Email"
+                write_tab: False
+                multiline: False
+            MDTextField:
+                id: senha_cadastro
+                pos_hint:{"center_x": 0.5}
+                size_hint: 0.8, None
+                hint_text: "Senha"
+                write_tab: False
+                multiline: False
+                password: True
+                helper_text: "Mínimo de 7 Caracteres para nome e sobrenome"
+                helper_text_mode: "on_error"
+            MDTextField:
+                id: confirma_senha
+                pos_hint:{"center_x": 0.5}
+                size_hint: 0.8, None
+                hint_text: "Confirme a Senha"
+                write_tab: False
+                multiline: False
+                password: True
+                helper_text: "Senha e confirmação não é a mesma."
+                helper_text_mode: "on_error"
+
+        MDBoxLayout:
+            pos_hint:{"center_x": 0.5}
+            size_hint: 0.8, None
+            spacing: "70dp"
+            padding: "30dp"
+            MDFillRoundFlatButton:
+                text: "OK"
+                on_release: root.cadastrar_novo_usuario(nome.text, username_cadastro.text, email.text, senha_cadastro.text, confirma_senha.text)
+            MDRoundFlatButton:
+                text: "Voltar"
+                on_release: root.manager.current = "login"
+
+            MDRoundFlatButton:
+                text: "Popular"
+                on_release: root.popular()
 
 <Login>:
     StackLayout:
@@ -46,6 +121,7 @@ Gerenciador:
             MDFillRoundFlatButton:
                 text:'Ok'
                 size_hint: None, None
+                # on_release: root.logar_usuario(loginuser.text, userpass.text)
                 on_release: root.manager.current = 'menu'
             MDRoundFlatButton:
                 size_hint:None, None
@@ -56,15 +132,14 @@ Gerenciador:
             size_hint: 1, None
 
             MDFillRoundFlatButton:
-                # size_hint: 1, None
                 text:"Sair"
                 on_release: app.stop()
 
             MDTextButton:
-                # size_hint: None, None
-                # pos_hint:{'center':1}
+                pos_hint:{'center_x':1}
                 text:'Registrar'
                 color:0,0,1,0.88
+                on_release: root.manager.current = 'newuser'
 
 
 <PresencasHotel>:
@@ -90,17 +165,57 @@ Gerenciador:
 
 
 <PresencasCreche>:
+    ScrollView:
+        size_hint:0.97, 0.87
+        pos_hint:{"top":1}
+        MDList:
+            id:scrolllist
+
     BoxLayout:
-        MDLabel:
-            text: 'Oi'
+        size_hint: None, None
+        spacing:'50dp'
+        pos_hint:{"x":(self.width/3)/self.width}
+        MDFloatingActionButton:
+            icon:'send'
+            on_release: root.caes_na_creche()
+        MDFloatingActionButton:
+            icon:'home'
+            on_release: root.manager.current = "menu"
+
+        MDFloatingActionButton:
+            icon:'plus'
+            on_release: app.show_add_dog_dialog(root)
+
 <PresencasDayCare>:
     BoxLayout:
         MDLabel:
-            text: 'Oi'
+            halign: 'center'
+            text: 'EM BREVE'
+    BoxLayout:
+        size_hint: None, None
+        spacing:'50dp'
+        pos_hint:{"x":(self.width/3)/self.width}
+        MDFloatingActionButton:
+            icon:'send'
+            # on_release: root.caes_no_hotel()
+        MDFloatingActionButton:
+            icon:'home'
+            on_release: root.manager.current = "menu"
 
+        MDFloatingActionButton:
+            icon:'plus'
+            # on_release: app.show_add_dog_dialog(root)
+<Chegadas>:
+    BoxLayout:
+        size_hint: None, None
+        spacing:'50dp'
+        pos_hint:{"x":(self.width/2.25)/self.width}
+        MDFloatingActionButton:
+            icon:'home'
+            on_release: root.manager.current = "menu"
 <Menu>:
     GridLayout:
-        rows: 3
+        rows: 4
         MDLabel:
             size_hint: 1, None
             text: 'Menu'
@@ -108,10 +223,28 @@ Gerenciador:
         GridLayout:
             rows: 3
             id:gridmenu
+        MDRaisedButton:
+            md_bg_color: 0.8,0,0,0.65
+            size_hint: 1, 0.15
+            text: "Sair"
+            on_press: app.logged = None
+            on_release: app.stop()
 
 <AddCaoPop>:
+    orientation: 'vertical'
+    spacing: "10dp"
+    size_hint: 1, None
     BoxLayout:
-        spacing: "50dp"
+        size_hint_x: 0.8
+        pos_hint:{"center_y":0, "center_x": 0.5}
         MDTextField:
             id:addcaopop
             hint_text:'Nome do Cão'
+    BoxLayout:
+#        size_hint_x: 1
+        spacing: self.width/2
+        MDRoundFlatButton:
+            text: "Cancelar"
+            on_release: app.dialog.dismiss()
+        MDFillRoundFlatButton:
+            text: 'Ok'
